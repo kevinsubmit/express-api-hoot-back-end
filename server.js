@@ -1,34 +1,28 @@
-const dotenv = require('dotenv');
+import dotenv from "dotenv";
 dotenv.config();
-const express = require('express');
+import cors from "cors";
+import express from "express";
 const app = express();
-const mongoose = require('mongoose');
-const usersRouter = require('./controllers/auth');
-const profilesRouter = require('./controllers/profiles');
-const cors = require('cors');
+import mongoose from "mongoose";
+import testJWTRouter from "./controllers/test-jwt.js";
+import usersRouter from "./controllers/users.js";
+import profilesRouter from "./controllers/profiles.js";
+import hootsRouter from "./controllers/hoots.js";
 
 mongoose.connect(process.env.MONGODB_URI);
 
-mongoose.connection.on('connected', () => {
+mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
-
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 
-
-app.use('/auth', usersRouter);
-app.use('/profiles', profilesRouter);
-
-
-app.get('/',(req,res) => {
-    res.json({"mes":"hello"})
-})
-
-
-// 使用 Heroku 提供的端口，如果没有则使用默认端口 5000
-const port = process.env.PORT || 5000;
 // Routes go here
-app.listen(port, () => {
-  console.log('The express app is ready!');
+app.use("/test-jwt", testJWTRouter);
+app.use("/users", usersRouter);
+app.use("/profiles", profilesRouter);
+app.use("/hoots", hootsRouter);
+
+app.listen(3000, () => {
+  console.log("The express app is ready!");
 });

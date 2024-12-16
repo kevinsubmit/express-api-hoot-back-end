@@ -1,14 +1,9 @@
-// controllers/users.js
-const express = require("express");
+import express from "express";
 const router = express.Router();
-// Add bcrypt and the user model
-const bcrypt = require("bcrypt");
-const User = require("../models/user");
-// controllers/users.js
-// At the top of the file
-const jwt = require("jsonwebtoken");
+import bcrypt from "bcrypt";
+import User from "../models/user.js";
+import jwt from "jsonwebtoken";
 
-// Add in constant for the number
 const SALT_LENGTH = 12;
 
 router.post("/signup", async (req, res) => {
@@ -23,24 +18,33 @@ router.post("/signup", async (req, res) => {
       username: req.body.username,
       hashedPassword: bcrypt.hashSync(req.body.password, SALT_LENGTH),
     });
+
     const token = jwt.sign(
-      { username: user.username, _id: user._id },
+      {
+        username: user.username,
+        _id: user._id,
+        expiresIn: "1d",
+      },
       process.env.JWT_SECRET
     );
+
     res.status(201).json({ user, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
 
-// controllers/users.js
-
 router.post("/signin", async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
+
     if (user && bcrypt.compareSync(req.body.password, user.hashedPassword)) {
       const token = jwt.sign(
-        { username: user.username, _id: user._id },
+        {
+          username: user.username,
+          _id: user._id,
+          expiresIn: "1d",
+        },
         process.env.JWT_SECRET
       );
       res.status(200).json({ token });
@@ -52,4 +56,4 @@ router.post("/signin", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

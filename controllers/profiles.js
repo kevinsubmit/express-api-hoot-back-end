@@ -1,16 +1,14 @@
-// controllers/profiles.js
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const User = require("../models/user");
-const verifyToken = require("../middleware/verify-token");
+import User from "../models/user.js";
+import verifyToken from "../middleware/verify-token.js";
 
 router.get("/:userId", verifyToken, async (req, res) => {
   try {
     if (req.user._id !== req.params.userId) {
-      // check the ID of the user!
       return res.status(401).json({ error: "Unauthorized" });
     }
-    const user = await User.findById(req.params.userId);
+    const user = await User.findById(req.user._id);
     if (!user) {
       res.status(404);
       throw new Error("Profile not found.");
@@ -25,4 +23,4 @@ router.get("/:userId", verifyToken, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
