@@ -21,6 +21,6 @@ app.use("/users", usersRouter);
 app.use("/profiles", profilesRouter);
 app.use("/hoots", hootsRouter);
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   console.log("The express app is ready!");
 });
