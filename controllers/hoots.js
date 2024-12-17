@@ -90,7 +90,7 @@ router.delete("/:hootId", verifyToken, async (req, res) => {
       return res.status(403).send("You're not allowed to do that!");
     }
 
-    const deletedHoot = await Hoot.findByIdAndDelete(req.params.id);
+    const deletedHoot = await Hoot.findByIdAndDelete(req.params.hootId);
     res.status(200).json(deletedHoot);
   } catch (error) {
     res.status(500).json(error);
