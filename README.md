@@ -8,8 +8,10 @@ The Hoot App is like a blog which is designed to help users write their moods da
 
 ## Interact Here
 
-[Deployed URL](https://vocabulary-learning-app-97239a073f2c.herokuapp.com/)
-[GitHub URL](https://github.com/kevinsubmit/Vocabulary-Learning-App/)
+[Deployed URL](https://hootblog.netlify.app/)
+[GitHub URL Front-end](https://github.com/kevinsubmit/react-hoot-front-end)
+[GitHub URL Back-end](https://github.com/kevinsubmit/express-api-hoot-back-end)
+
 
 **Login View**
 
