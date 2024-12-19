@@ -104,7 +104,7 @@ router.delete("/:hootId", verifyToken, async (req, res) => {
 
 // controllers/hoots.js
 
-router.put('/:hootId/comments/:commentId', async (req, res) => {
+router.put('/:hootId/comments/:commentId',verifyToken, async (req, res) => {
   try {
     const hoot = await Hoot.findById(req.params.hootId);
     const comment = hoot.comments.id(req.params.commentId);
@@ -118,7 +118,7 @@ router.put('/:hootId/comments/:commentId', async (req, res) => {
 
 // controllers/hoots.js
 
-router.delete('/:hootId/comments/:commentId', async (req, res) => {
+router.delete('/:hootId/comments/:commentId',verifyToken, async (req, res) => {
   try {
     const hoot = await Hoot.findById(req.params.hootId);
     hoot.comments.remove({ _id: req.params.commentId });
