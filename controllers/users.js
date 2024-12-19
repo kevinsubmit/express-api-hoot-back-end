@@ -22,10 +22,10 @@ router.post("/signup", async (req, res) => {
     const token = jwt.sign(
       {
         username: user.username,
-        _id: user._id,
-        expiresIn: "1d",
+        _id: user._id
       },
-      process.env.JWT_SECRET
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' } 
     );
 
     res.status(201).json({ user, token });
@@ -43,9 +43,9 @@ router.post("/signin", async (req, res) => {
         {
           username: user.username,
           _id: user._id,
-          expiresIn: "1d",
         },
-        process.env.JWT_SECRET
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' } 
       );
       res.status(200).json({ token });
     } else {
